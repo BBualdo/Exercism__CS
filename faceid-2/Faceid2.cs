@@ -1,58 +1,34 @@
 using System;
 using System.Collections.Generic;
 
-public class FacialFeatures
+public class FacialFeatures(string eyeColor, decimal philtrumWidth)
 {
-    public string EyeColor { get; }
-    public decimal PhiltrumWidth { get; }
-
-    public FacialFeatures(string eyeColor, decimal philtrumWidth)
-    {
-        EyeColor = eyeColor;
-        PhiltrumWidth = philtrumWidth;
-    }
+    public string EyeColor { get; } = eyeColor;
+    public decimal PhiltrumWidth { get; } = philtrumWidth;
 
     public override bool Equals(object obj)
     {
         if (obj is null) return false;
-        var other = (FacialFeatures)obj;
-        return EyeColor == other.EyeColor && PhiltrumWidth == other.PhiltrumWidth;
+        if (obj is FacialFeatures f) return EyeColor == f.EyeColor && PhiltrumWidth == f.PhiltrumWidth;
+        return false;
     }
 
-    public override int GetHashCode()
-    {
-        int hash = 17;
-        hash = hash * 31 + EyeColor.GetHashCode();
-        hash = hash * 31 + PhiltrumWidth.GetHashCode();
-        return hash;
-    }
+    public override int GetHashCode() => (EyeColor, PhiltrumWidth).GetHashCode();
 }
 
-public class Identity
+public class Identity(string email, FacialFeatures facialFeatures)
 {
-    public string Email { get; }
-    public FacialFeatures FacialFeatures { get; }
-
-    public Identity(string email, FacialFeatures facialFeatures)
-    {
-        Email = email;
-        FacialFeatures = facialFeatures;
-    }
+    public string Email { get; } = email;
+    public FacialFeatures FacialFeatures { get; } = facialFeatures;
 
     public override bool Equals(object obj)
     {
         if (obj is null) return false;
-        var other = (Identity)obj;
-        return Email == other.Email && FacialFeatures.Equals(other.FacialFeatures);
+        if (obj is Identity i) return Email == i.Email && FacialFeatures.Equals(i.FacialFeatures);
+        return false;
     }
 
-    public override int GetHashCode()
-    {
-        int hash = 17;
-        hash = hash * 31 + Email.GetHashCode();
-        hash = hash * 31 + FacialFeatures.GetHashCode();
-        return hash;
-    }
+    public override int GetHashCode() => (Email, FacialFeatures).GetHashCode();
 }
 
 public class Authenticator
