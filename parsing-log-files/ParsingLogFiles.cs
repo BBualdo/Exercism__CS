@@ -8,10 +8,9 @@ public class LogParser
 
     public string[] SplitLogLine(string text) => Regex.Split(text, @"<[\^*=\-]+>");
     
-    public int CountQuotedPasswords(string lines) => Regex.Count(lines, @""".*?[pP][aA][sS][sS][wW][oO][rR][dD].*?""");
-
-
-    public string RemoveEndOfLineText(string line) => Regex.Replace(line, "end-of-line([0-9]+)", "");
+    public int CountQuotedPasswords(string lines) => Regex.Count(lines, @""".*?password.*?""", RegexOptions.IgnoreCase);
+    
+    public string RemoveEndOfLineText(string line) => Regex.Replace(line, @"end-of-line\d+", "");
 
     public string[] ListLinesWithPasswords(string[] lines)
     {
